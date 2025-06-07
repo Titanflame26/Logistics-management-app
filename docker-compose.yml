@@ -1,0 +1,71 @@
+
+
+services:
+
+  frontend_container:
+    build:
+      context: ./frontend
+    container_name: frontend_container
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend_container
+    environment:
+      VITE_API_URL: http://localhost:3000
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path: ./frontend
+          target: /app
+          action: sync
+
+  backend_container:
+    build:
+      context: ./backend
+    container_name: backend_container
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db_container
+    environment:
+      DB_HOST: db_container
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      DB_NAME: logistic_db
+      DB_DIALECT: mysql
+      PORT: 3000
+    #volumes:
+      #- ./backend:/app
+      #- /app/node_modules
+    develop:
+      watch:
+        - path: ./backend/package.json
+          action: rebuild
+        - path: ./backend/package-lock.json
+          action: rebuild
+        - path: ./backend
+          target: /app
+          action: sync
+
+  db_container:
+    image: mysql:8.0
+    container_name: db_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: bharadwaj@26
+      MYSQL_DATABASE: logistic_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/initial-Schema.sql:/docker-entrypoint-initdb.d/initial-Schema.sql
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

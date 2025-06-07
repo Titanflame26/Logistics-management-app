@@ -1,0 +1,13 @@
+Frontend fetch() POST http://localhost:3000/api/customers
+      ⬇
+app.js → app.use('/api/customers', customerRoutes)
+      ⬇
+routes/customerRoutes.js → router.post('/', controller.createCustomer)
+      ⬇
+controller → createCustomer(req, res)
+      ⬇
+model → Customer.create(req.body)
+      ⬇
+MySQL inserts customer and returns result
+      ⬇
+response sent back to frontend
