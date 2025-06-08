@@ -27,6 +27,8 @@
     font-optical-sizing: auto;
     background: #000e3c;
     background-image: url("./assets/supply-chain.jpg");
+    background-repeat: no-repeat;
+    background-position: revert;
   }
 }
 .form-card {
@@ -204,7 +206,7 @@
 .home-button {
   padding: 1rem 2rem;
   font-size: 1rem;
-  background-color: #630270;
+  background-color: #023c51;
   color: white;
   border: none;
   border-radius: 8px;
@@ -213,6 +215,7 @@
 }
 
 .home-button:hover {
-  background-color: #3730a3;
+  background-color: #7c6fc5;
+  box-shadow: 0 0 10px #00ffeb, 0 0 20px #00ffeb, 0 0 30px #0b85df;
 }
 
